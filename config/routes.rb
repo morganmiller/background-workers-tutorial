@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  require 'resque/server'
+
+  JsbloggerCodemash::Application.routes.draw do
+    #Use mount to ask for external routes
+    mount Resque::Server.new, at: "/resque"
+  end
+
   resources :articles
   resources :comments
   resource  :account,   only: [:show] do
